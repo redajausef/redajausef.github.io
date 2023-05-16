@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign up / Login Form</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+
+    <div class="signup">
+      <form id="signup-form">
+        <label for="chk" aria-hidden="true">Sign up</label>
+        <input type="text" name="username" placeholder="User name" required="">
+        <input type="email" name="email" placeholder="Email" required="">
+        <input type="password" name="password" placeholder="Password" required="">
+        <button type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <div class="login">
+      <form id="login-form">
+        <label for="chk" aria-hidden="true">Login</label>
+        <input type="email" name="email" placeholder="Email" required="">
+        <input type="password" name="password" placeholder="Password" required="">
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Simuler une base de données d'utilisateurs
+    const users = [
+      { username: "reda", email: "redajausef123@gmail.com", password: "redareda123" },
+      { username: "test", email: "test@gmail.com", password: "testtest123" }
+    ];
+
+  // Fonction pour rechercher un utilisateur par email dans la base de données
+  function findUserByEmail(email) {
+    return users.find(user => user.email === email);
+  }
+
+  // Fonction pour enregistrer un nouvel utilisateur dans la base de données
+  function registerUser(userData) {
+    users.push(userData);
+    console.log("Utilisateur enregistré :", userData);
+  }
+
+  // Gestionnaire d'événement pour le formulaire d'inscription
+  document.getElementById("signup-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche la soumission du formulaire
+
+    // Récupérer les valeurs du formulaire d'inscription
+    const username = this.username.value;
+    const email = this.email.value;
+    const password = this.password.value;
+
+    // Créer un objet avec les données de l'utilisateur
+    const userData = {
+      username: username,
+      email: email,
+      password: password
+    };
+
+    // Appeler la fonction d'enregistrement de l'utilisateur
+    registerUser(userData);
+    alert("Compte créé avec succès ! Vous pouvez maintenant vous connecter.");
+    this.reset(); // Réinitialiser le formulaire
+  });
+
+  // Gestionnaire d'événement pour le formulaire de connexion
+  document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche la soumission du formulaire
+
+    // Récupérer les valeurs du formulaire de connexion
+    const email = this.email.value;
+    const password = this.password.value;
+
+    // Rechercher l'utilisateur par email dans la base de données
+    const user = findUserByEmail(email);
+
+    if (user) {
+      if (user.password === password) {
+        // Connexion réussie
+        alert("Connexion réussie ! Vous allez être redirigé vers votre projet.");
+        window.location.href = "file:///C:/Users/WIN/Desktop/Universitry%20HTML%20Projet/projet.html";
+      } else {
+        // Mot de passe incorrect
+        alert("Mot de passe incorrect !");
+      }
+    } else {
+      // Compte inexistant
+      alert("Le compte n'existe pas. Veuillez créer un compte avant de vous connecter.");
+    }
+
+    this.reset(); // Réinitialiser le formulaire
+  });
+</script>
+
+</body>
+</html>
